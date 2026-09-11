@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "AI Trading Research Assistant"
+description = "A beginner-friendly prototype that turns plain-language trading research questions into clarified, structured experiment definitions through ASK, CLARIFY, and DEFINE stages."
+version = "1.0.0"
+id = "artifacts/ai-trading-research-assistant"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25937
+
+[services.development]
+run = "pnpm --filter @workspace/ai-trading-research-assistant run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/ai-trading-research-assistant", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/ai-trading-research-assistant/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25937"
+BASE_PATH = "/"
